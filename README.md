@@ -58,7 +58,7 @@ output of data, in lexicographic order.
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Grid.jpg?raw=true)
 
 An example of 𝛫 = 4 CKs available, hence 4 concurrent computations, will be considered. The figure
-presents a 2-dimensional grid 𝐴, of dimension size 𝐻𝐸𝐼𝐺𝐻𝑇 & 𝑊𝐼𝐷𝑇𝐻 with their corresponding iteration
+presents a 2-dimensional grid 𝐴, of dimension size $𝐻𝐸𝐼𝐺𝐻𝑇 & 𝑊𝐼𝐷𝑇𝐻$ with their corresponding iteration
 variables being 𝑖 and 𝑗. Note that the iteration starts at " − 1" for both dimensions, this is a design choice
 that has to do with the layout of the created memory system. Moreover, the iteration step is equal to 𝑛,
 so as to have 𝑛 elements processed in each clock cycle. The width of the array is denoted as 𝑊 and the
@@ -73,7 +73,7 @@ in internal memory. The opportunity to reuse these data manifest itself as most 
 than one computation. The memory system carries out this task. Elements are divided into 𝑛 sets,
 according to their iterator’s remainder modulo 𝑛, as described in the following equation.
 
-𝑗 % 𝑛 = 𝑥 
+$$ {𝑗 % 𝑛 = 𝑥} $$
 
 In the example of _n=4_ where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
@@ -92,7 +92,7 @@ the resulting data sets of Equation the equation above are presented below.
 These 𝑛 sets are called Reuse Chains and considering that for each clock cycle the design inputs 𝑛
 elements and generates 𝑛 consecutive output elements, it becomes apparent that each new element is
 introduced to a corresponding chain. The Figure above accurately maps the how the data elements of the example
-in the previous Figure are fed in 𝑛 = 4 Reuse Chains. The elements in every chain are characterized by a specific
+in the previous Figure are fed in $𝑛 = 4$ Reuse Chains. The elements in every chain are characterized by a specific
 color (red, green, blue, and yellow).
 
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Memory_System.jpg?raw=true)
@@ -115,7 +115,7 @@ stored in consecutive registers in the red reuse chain, as shown in the previous
 𝑛 then the intermediate elements are stored in the FIFOs.
 
 An important distinction among the Reuse Chains is present in the architecture and depicted in the Reuse Buffer figure
-and classifies them in two categories. The first (𝑗 % 𝑛 = 𝑛 − 1) and last (𝑗 % 𝑛 = 0) chains have a
+and classifies them in two categories. The first $(𝑗 % 𝑛 = 𝑛 − 1)$ and last $(𝑗 % 𝑛 = 0)$ chains have a
 different layout compared to the other ones. These two chains will be mentioned as edge chains to
 differentiate them from the intermediate ones. This difference in structure, is a direct result to the fact
 that our design implements a square stencil pattern, that is, a 9-Point stencil. On that account, the amount
@@ -133,7 +133,7 @@ implemented with SRL.
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/Edge_Chain_Size_Table.jpg?raw=true)
 
 The size of the FIFOs can be derived as follows. Between element −𝑊 + 7, which will be the first
-element stored in the FIFO_0, and −1, the iteration distance is −1 − (−𝑊 + 7) = 𝑊 − 8 or 𝑊 − 2 ∗ 𝑛,
+element stored in the FIFO_0, and −1, the iteration distance is $ −1 − (−𝑊 + 7) = 𝑊 − 8$  or $𝑊 − 2 ∗ 𝑛$,
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛^𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
@@ -154,7 +154,7 @@ Grid Map Figure, although all intermediate chains follow the same layout.
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/Inter_Chain_Size_Table.jpg?raw=true)
 
 The FIFOs of these Reuse Chains store every n^th data element of a row except from one element. The first element in the first FIFO,
-as presented in the Grid Map Figure, will be the one named -W+5, hence 
+as presented in the Grid Map Figure, will be the one named $-W+5$, hence 
 
 $$ _FIFO_{intermediate_{size}}={1-(-W+5)\over n}={(W-4)\over n}={(W-n)\over n}={{WIDTH\over n}-1} $$
 
@@ -163,7 +163,7 @@ Where W denotes the WIDTH of each row. As follows, the sum of individual memory 
 $$ _Chain_{intermediate_{size}}={2*WIDTH\over{n-2+3}}={{2*WIDTH\over n}+1} $$
 
 Where the assumption that n>1 has been made, ergo, there are 2 edge Reuse Chains and n-2 intermediate ones. 
-Considering the example of the Grid Map Figure where n=4 and utilizing the equation above we conclude that the whole buffer has a total size of 2*WIDTH+6. 
+Considering the example of the Grid Map Figure where n=4 and utilizing the equation above we conclude that the whole buffer has a total size of $2*WIDTH+6$. 
 This result is apparent in the aforementioned Figures where the two first rows and six more elements of the third are buffered on-chip. 
 An important observation ensues if n=1, that is, when only one CK is available, 
 therefore one element is received as input and one element is calculated and outputted. 
