@@ -73,18 +73,18 @@ in internal memory. The opportunity to reuse these data manifest itself as most 
 than one computation. The memory system carries out this task. Elements are divided into 𝑛 sets,
 according to their iterator’s remainder modulo 𝑛, as described in the following equation.
 
-$$ {𝑗 % 𝑛 = 𝑥} $$
+𝑗 % 𝑛 = 𝑥 
 
 In the example of Figure 16 where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
  
-$$ {𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3}} $$
+𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3} 
 
-$$ 𝑗 % 4 = 2 ⟶ {−𝑊 + 2, 2, 𝑊 + 2} $$
+𝑗 % 4 = 2 ⟶ {−𝑊 + 2, 2, 𝑊 + 2}
 
-$$ 𝑗 % 4 = 1 ⟶ {−𝑊 + 1, 1, 𝑊 + 1} $$
+𝑗 % 4 = 1 ⟶ {−𝑊 + 1, 1, 𝑊 + 1}
 
-$$ 𝑗 % 4 = 0 ⟶ {−𝑊, −𝑊 + 4, 0, 4, 𝑊, 𝑊 + 4} $$
+𝑗 % 4 = 0 ⟶ {−𝑊, −𝑊 + 4, 0, 4, 𝑊, 𝑊 + 4}
 
 
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Grid_Reuse_Chain_Mapping.jpg?raw=true)
@@ -137,13 +137,13 @@ element stored in the FIFO_0, and −1, the iteration distance is −1 − (−�
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛^𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
-$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \{over n} -2 } $$
+$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {{WIDTH \over n} -2 } $$
 
 This result is apparent in the Grid Map Figure where the FIFO stores every 𝑛^𝑡ℎ data element in the first row,
 except from the first two. The total size of the Reuse Chain is the aggregate of the sizes of all the individual
 memory elements in that buffer. In the case of the first and last chain, that is:
 
-$$ Chain_{edge_{size}}={2*WIDTH\over n -4 +6}={2*WIDTH\over n +2} $$
+$$ _Chain_{edge_{size}}={{2*WIDTH\over n} -4 +6}={{2*WIDTH\over n} +2} $$
 
 Which in turn is also evident in the Grid Map Figure, as the edge Reuse Chains store every 𝑛^𝑡ℎ data of the first
 and second rows, as well as 2 elements from the third.
@@ -156,9 +156,45 @@ Grid Map Figure, although all intermediate chains follow the same layout.
 The FIFOs of these Reuse Chains store every n^th data element of a row except from one element. The first element in the first FIFO,
 as presented in the Grid Map Figure, will be the one named -W+5, hence 
 
-$$ FIFO_{intermediate_{size}}={1-(-W+5)\over n}={(W-4)\over n}={(W-n)\over n}={WIDTH\over {n-1}} $$
+$$ _FIFO_{intermediate_{size}}={1-(-W+5)\over n}={(W-4)\over n}={(W-n)\over n}={{WIDTH\over n}-1} $$
 
-$$ Chain_{intermediate_{size}}={2*WIDTH\over{n-2+3}}={2*WIDTH\over {n+1}} $$
+Where W denotes the WIDTH of each row. As follows, the sum of individual memory element sizes makes up the total size of the intermediate Reuse Chain.
+
+$$ _Chain_{intermediate_{size}}={2*WIDTH\over{n-2+3}}={{2*WIDTH\over n}+1} $$
+
+Where the assumption that n>1 has been made, ergo, there are 2 edge Reuse Chains and n-2 intermediate ones. 
+Considering the example of the Grid Map Figure where n=4 and utilizing the equation above we conclude that the whole buffer has a total size of 2*WIDTH+6. 
+This result is apparent in the aforementioned Figures where the two first rows and six more elements of the third are buffered on-chip. 
+An important observation ensues if n=1, that is, when only one CK is available, 
+therefore one element is received as input and one element is calculated and outputted. 
+The design does not implement parallelism and is diminished to the TCAD design, described in [[2]](#2).
+
+The Output Handler of the design mimics the function of the one of STSA. 
+It receives data from the Computation Kernel and utilizes control logic to decide whether to forward data to the output ports, 
+as well as deciding the nature of these data, that is, halo or computed data. It should be emphasized that a delay is introduced in the output of the calculated data.
+Given the fact that n results should be outputted simultaneously, 
+along with the need to input the element at the position [i+1,j+1] in order to calculate the result at position [i,j], creates a subsequent delay of (WIDTH+1)/n. 
+The divisor n is a result of the iteration step that has the same size. 
+In the example presented in Figure 16, the first n=4 outputs of the CKs are available once the element named W+4 is read. 
+Subsequently, elements named 1 through 4 are outputted. 
+The control logic of the Output Handler ensures the continuous flow of data in the output ports by introducing the same delay, 
+of WIDTH+1 clock cycles, to the output of halo data. 
+The aforementioned data are already situated inside the reuse chains in registers R_1 and R_2 for intermediate and edge chains respectively. 
+In order to better understand the output delay.
+
+It should be noted, that alike the TCAD architecture, the SODA has an intrinsic latency. 
+This is the time measured in clock cycles, necessary to forward data to the CK’s from the Reuse Buffer, compute the results and output the calculated data. 
+This intrinsic latency is measured from the cycle that the data required for a computation is read, 
+until the computed value is outputted, and will be denoted as SPTA_Latency. 
+Therefore, for the total latency of the design, all the grid elements should be traversed, ergo _WIDTH_*HEIGHT iterations, nonetheless, we now utilize a step of n.
+
+$$ _Latency=HEIGHT*{WIDTH\over n} + {WIDTH+1/over n} + SPTA_Latency ⟹ Latency=(HEIGHT+1)*WIDTH\over n+SPTA_Latency+1 $$
+
+where the term $1\over n$ is quantized to one, given that clock cycle is a discrete quantitative variable. 
+This results in “wasting” the final clock cycle, as is evident in the Figure below, only to output one last data element, instead of n. 
+This is again a result of the 9-Point stencil pattern. 
+
+![alt text](https://github.com/miltosmac/TCAD/blob/main/TCAD_Illustrations/TCAD_Output_Delay.jpg?raw=true)
 
 ### References
 <a id="1">[1]</a> 
