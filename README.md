@@ -41,6 +41,102 @@ structure presented below is dedicated to the stencil pattern of a 9-Point stenc
 
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Overview.jpg?raw=true)
 
+### Detailed Explanation
+
+#### Single Time-Step
+
+The figure above provides an overview of the accelerator. Given that 𝑛 is the arbitrary number of CKs, the
+design inputs 𝑛 new data from external memory, these inputs are concurrent, i.e., they happen
+simultaneously through 𝑛 different input ports at the same clock cycle. At the next cycle 𝑛 new inputs are
+introduced and so forth, ensuring the streaming of data in every port. These data are introduced to the
+memory system that feeds the CKs with the appropriate data. Then 𝑛 results are calculated in the
+respective kernels and are forwarded to the Output Handler. In turn, the Output Handler, determines
+whether data should be outputted, if that is the case, it decides to output either from the CKs, or directly
+from the memory system, in case of halo data. The operation of the Output Handler ensures streaming
+output of data, in lexicographic order.
+
+![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Grid.jpg?raw=true)
+
+An example of 𝛫 = 4 CKs available, hence 4 concurrent computations, will be considered. The figure
+presents a 2-dimensional grid 𝐴, of dimension size 𝐻𝐸𝐼𝐺𝐻𝑇 & 𝑊𝐼𝐷𝑇𝐻 with their corresponding iteration
+variables being 𝑖 and 𝑗. Note that the iteration starts at " − 1" for both dimensions, this is a design choice
+that has to do with the layout of the created memory system. Moreover, the iteration step is equal to 𝑛,
+so as to have 𝑛 elements processed in each clock cycle. The width of the array is denoted as 𝑊 and the
+numbering written on the cubes marks iteration distances among them using as starting point the element
+in [0,0]. To ensure the correct operation of the design, it is essential that 𝑛 should perfectly divide the
+total width of the innermost loop of the stencil kernel, i.e., 𝑊𝐼𝐷𝑇𝐻.
+
+The elements required for the computation of 𝑛 results are represented as the cubes highlighted in
+red. The ones that are stored on-chip without contributing to the calculation of the current clock cycle are
+highlighted in green. The sum of the highlighted cubes represents all the elements that need to be stored
+in internal memory. The opportunity to reuse these data manifest itself as most of them take part in more
+than one computation. The memory system carries out this task. Elements are divided into 𝑛 sets,
+according to their iterator’s remainder modulo 𝑛, as described in the following equation.
+
+𝑗 % 𝑛 = 𝑥 
+
+In the example of Figure 16 where the data needed for calculation are named and highlighted in red,
+the resulting data sets of Equation the equation above are presented below.
+
+𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3}
+𝑗 % 4 = 2 ⟶ {−𝑊 + 2, 2, 𝑊 + 2}
+𝑗 % 4 = 1 ⟶ {−𝑊 + 1, 1, 𝑊 + 1}
+𝑗 % 4 = 0 ⟶ {−𝑊, −𝑊 + 4, 0, 4, 𝑊, 𝑊 + 4}
+
+![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Grid_Reuse_Chain_Mapping.jpg?raw=true)
+
+These 𝑛 sets are called Reuse Chains and considering that for each clock cycle the design inputs 𝑛
+elements and generates 𝑛 consecutive output elements, it becomes apparent that each new element is
+introduced to a corresponding chain. The figure above accurately maps the how the data elements of the example
+in Figure 16 are fed in 𝑛 = 4 Reuse Chains. The elements in every chain are characterized by a specific
+color (red, green, blue, and yellow).
+
+![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Memory_System.jpg?raw=true)
+
+The collection of these Reuse Chains makes up the memory system. The memory system is referred
+to as the Reuse Buffer and, for an arbitrary number 𝑛 of CKs available, is presented in Figure 18. The Reuse
+Chains are further fragmented into memory elements, either registers or FIFOs. The data elements in the
+Reuse Chains that need to be available for computational purposes in an arbitrary clock cycle, are stored
+in registers, that are denoted as 𝑅_0, 𝑅_1, etc. The need for parallel access to these elements in order to
+propagate their values to the CKs, justifies the use of independent memory units. The rest of the data are
+destined for computations in following clock cycles, and thus are stored in FIFOs. With every clock cycle
+the data are shifted through each reuse chain. One new input is introduced, each memory unit feeds the
+following and receives new input from the previous one, therefore the values inside the FIFOs are shifted
+and new elements that are ready to be forwarded to the CKs, are available in the registers.
+
+Since the numbered elements in each set have the same remainder modulo 𝑛, the minimum iteration
+distance between them will be 𝑛. If the interval length equals to 𝑛, then the elements are stored in
+consecutive registers (e.g., elements −𝑊 − 1 and −𝑊 + 3 are separated by distance 𝑛 = 4, thus are
+stored in consecutive registers in the red reuse chain, as shown in the previous figure). If the interval length exceeds
+𝑛 then the intermediate elements are stored in the FIFOs.
+
+An important distinction among the Reuse Chains is present in the architecture and depicted in the Reuse Buffer figure
+and classifies them in two categories. The first (𝑗 % 𝑛 = 𝑛 − 1) and last (𝑗 % 𝑛 = 0) chains have a
+different layout compared to the other ones. These two chains will be mentioned as edge chains to
+differentiate them from the intermediate ones. This difference in structure, is a direct result to the fact
+that our design implements a square stencil pattern, that is, a 9-Point stencil. On that account, the amount
+of data forwarded to the CKs in edge chains, is more than the one in the rest of the chains. The data sets
+derived in Equation ( 9 ) as well as the color-coded mapping in Figure 17 describe this effect explicitly. Six
+elements needed to be used for every computation, are in each of the edge Reuse Chains, while only three
+are needed from the rest.
+
+A better understanding of the individual memory elements that each category utilizes is available on
+the tables bellow. The first table provides an overview of data stored in the first Reuse Chain, when
+considering the example of Figure 17 where 𝑛 = 4. The last Reuse Chain is structured in the same manner.
+On FPGAs, large FIFO, whose capacity exceeds 1024 bits is implemented with BRAM and small FIFO is
+implemented with SRL.
+
+![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/Edge_Chain_Size_Table.jpg?raw=true)
+
+The size of the FIFOs can be derived as follows. Between element −𝑊 + 7, which will be the first
+element stored in the FIFO_0, and −1, the iteration distance is −1 − (−𝑊 + 7) = 𝑊 − 8 or 𝑊 − 2 ∗ 𝑛,
+where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛𝑡ℎ element.
+Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
+
+FIFO_(edge_size )=(WIDTH-2*n)/n=WIDTH/n-2
+
+
+
 ### References
 <a id="1">[1]</a> 
 Y. Chi, J. Cong, P. Wei and P. Zhou, "SODA: Stencil with Optimized Dataflow Architecture," 2018 IEEE/ACM International Conference on Computer-Aided Design (ICCAD), 2018, pp. 1-8, doi: 10.1145/3240765.3240850.
