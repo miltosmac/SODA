@@ -11,7 +11,7 @@
 * [Multiple Time-Stepsp](#Multiple-Time-Steps)
 
 ### About
-This project introduces an architecture that optimizes Stencil Kernel Calculations and is offloaded to FPGAs with the use of High Level Synthesis tools (HLS).  
+This project introduces an architecture that optimizes Stencil Kernel Calculations and is offloaded to FPGAs with the use of Vitis (Vivado) High Level Synthesis tool (HLS). 
 
 ### Technologies
 Project is created with:
