@@ -186,7 +186,7 @@ It should be noted, that alike the TCAD architecture, the SODA has an intrinsic 
 This is the time measured in clock cycles, necessary to forward data to the CK’s from the Reuse Buffer, compute the results and output the calculated data. 
 This intrinsic latency is measured from the cycle that the data required for a computation is read, 
 until the computed value is outputted, and will be denoted as SPTA_Latency. 
-Therefore, for the total latency of the design, all the grid elements should be traversed, ergo WIDTH*HEIGHT iterations, nonetheless, we now utilize a step of n.
+Therefore, for the total latency of the design, all the grid elements should be traversed, ergo $WIDTH*HEIGHT$ iterations, nonetheless, we now utilize a step of n.
 
 $$ Latency={HEIGHT*{WIDTH\over n} + {WIDTH+1\over n} + SPTA_{Latency} } ⟹ Latency={(HEIGHT+1)*{WIDTH\over n}} +SPTA_{Latency}+1 $$
 
