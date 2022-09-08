@@ -73,7 +73,7 @@ in internal memory. The opportunity to reuse these data manifest itself as most 
 than one computation. The memory system carries out this task. Elements are divided into 𝑛 sets,
 according to their iterator’s remainder modulo 𝑛, as described in the following equation.
 
-$$ 𝑗 % 𝑛 = 𝑥 $$
+$$ {𝑗 % 𝑛 = 𝑥} $$
 
 In the example of Figure 16 where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
@@ -137,7 +137,7 @@ element stored in the FIFO_0, and −1, the iteration distance is −1 − (−�
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛^𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
-$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \over n -2 } $$
+$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \{over n} -2 } $$
 
 This result is apparent in the Grid Map Figure where the FIFO stores every 𝑛^𝑡ℎ data element in the first row,
 except from the first two. The total size of the Reuse Chain is the aggregate of the sizes of all the individual
