@@ -79,7 +79,9 @@ In the example of Figure 16 where the data needed for calculation are named and 
 the resulting data sets of Equation the equation above are presented below.
 
 𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3}
+
 𝑗 % 4 = 2 ⟶ {−𝑊 + 2, 2, 𝑊 + 2}
+
 𝑗 % 4 = 1 ⟶ {−𝑊 + 1, 1, 𝑊 + 1}
 𝑗 % 4 = 0 ⟶ {−𝑊, −𝑊 + 4, 0, 4, 𝑊, 𝑊 + 4}
 
@@ -133,7 +135,8 @@ element stored in the FIFO_0, and −1, the iteration distance is −1 − (−�
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
-FIFO_(edge_size )=(WIDTH-2*n)/n=WIDTH/n-2
+$$ _FIFO_(edge_size )={(WIDTH-2_*n)/n=WIDTH/n-2} $$
+
 
 
 
