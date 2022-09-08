@@ -120,7 +120,7 @@ different layout compared to the other ones. These two chains will be mentioned 
 differentiate them from the intermediate ones. This difference in structure, is a direct result to the fact
 that our design implements a square stencil pattern, that is, a 9-Point stencil. On that account, the amount
 of data forwarded to the CKs in edge chains, is more than the one in the rest of the chains. The data sets
-derived in Equation ( 9 ) as well as the color-coded mapping in Figure 17 describe this effect explicitly. Six
+derived in Equation ( 9 ) as well as the color-coded mapping in the Grid Map Figure describe this effect explicitly. Six
 elements needed to be used for every computation, are in each of the edge Reuse Chains, while only three
 are needed from the rest.
 
