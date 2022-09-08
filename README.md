@@ -92,7 +92,7 @@ the resulting data sets of Equation the equation above are presented below.
 These 𝑛 sets are called Reuse Chains and considering that for each clock cycle the design inputs 𝑛
 elements and generates 𝑛 consecutive output elements, it becomes apparent that each new element is
 introduced to a corresponding chain. The figure above accurately maps the how the data elements of the example
-in Figure 16 are fed in 𝑛 = 4 Reuse Chains. The elements in every chain are characterized by a specific
+in the previous Figure are fed in 𝑛 = 4 Reuse Chains. The elements in every chain are characterized by a specific
 color (red, green, blue, and yellow).
 
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Memory_System.jpg?raw=true)
