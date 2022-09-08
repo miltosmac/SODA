@@ -98,7 +98,7 @@ color (red, green, blue, and yellow).
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Memory_System.jpg?raw=true)
 
 The collection of these Reuse Chains makes up the memory system. The memory system is referred
-to as the Reuse Buffer and, for an arbitrary number 𝑛 of CKs available, is presented in Figure 18. The Reuse
+to as the Reuse Buffer and, for an arbitrary number 𝑛 of CKs available, is presented in the above Figure. The Reuse
 Chains are further fragmented into memory elements, either registers or FIFOs. The data elements in the
 Reuse Chains that need to be available for computational purposes in an arbitrary clock cycle, are stored
 in registers, that are denoted as 𝑅_0, 𝑅_1, etc. The need for parallel access to these elements in order to
