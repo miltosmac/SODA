@@ -75,7 +75,7 @@ according to their iterator’s remainder modulo 𝑛, as described in the follo
 
 𝑗 % 𝑛 = 𝑥 
 
-In the example of Figure 16 where the data needed for calculation are named and highlighted in red,
+In the example of _n=4_ where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
  
 𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3} 
@@ -91,7 +91,7 @@ the resulting data sets of Equation the equation above are presented below.
 
 These 𝑛 sets are called Reuse Chains and considering that for each clock cycle the design inputs 𝑛
 elements and generates 𝑛 consecutive output elements, it becomes apparent that each new element is
-introduced to a corresponding chain. The figure above accurately maps the how the data elements of the example
+introduced to a corresponding chain. The Figure above accurately maps the how the data elements of the example
 in the previous Figure are fed in 𝑛 = 4 Reuse Chains. The elements in every chain are characterized by a specific
 color (red, green, blue, and yellow).
 
@@ -111,7 +111,7 @@ and new elements that are ready to be forwarded to the CKs, are available in the
 Since the numbered elements in each set have the same remainder modulo 𝑛, the minimum iteration
 distance between them will be 𝑛. If the interval length equals to 𝑛, then the elements are stored in
 consecutive registers (e.g., elements −𝑊 − 1 and −𝑊 + 3 are separated by distance 𝑛 = 4, thus are
-stored in consecutive registers in the red reuse chain, as shown in the previous figure). If the interval length exceeds
+stored in consecutive registers in the red reuse chain, as shown in the previous Figure). If the interval length exceeds
 𝑛 then the intermediate elements are stored in the FIFOs.
 
 An important distinction among the Reuse Chains is present in the architecture and depicted in the Reuse Buffer figure
@@ -120,7 +120,7 @@ different layout compared to the other ones. These two chains will be mentioned 
 differentiate them from the intermediate ones. This difference in structure, is a direct result to the fact
 that our design implements a square stencil pattern, that is, a 9-Point stencil. On that account, the amount
 of data forwarded to the CKs in edge chains, is more than the one in the rest of the chains. The data sets
-derived in Equation ( 9 ) as well as the color-coded mapping in the Grid Map Figure describe this effect explicitly. Six
+calculated above as well as the color-coded mapping in the Grid Map Figure describe this effect explicitly. Six
 elements needed to be used for every computation, are in each of the edge Reuse Chains, while only three
 are needed from the rest.
 
