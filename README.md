@@ -188,7 +188,7 @@ This intrinsic latency is measured from the cycle that the data required for a c
 until the computed value is outputted, and will be denoted as SPTA_Latency. 
 Therefore, for the total latency of the design, all the grid elements should be traversed, ergo WIDTH*HEIGHT iterations, nonetheless, we now utilize a step of n.
 
-$$ Latency={HEIGHT*{WIDTH\over n} + {WIDTH+1\over n} + SPTA_{Latency} } ⟹ Latency={(HEIGHT+1)*WIDTH\over n} +SPTA_{Latency}+1 $$
+$$ Latency={HEIGHT*{WIDTH\over n} + {WIDTH+1\over n} + SPTA_{Latency} } ⟹ Latency={(HEIGHT+1)*{WIDTH\over n}} +SPTA_{Latency}+1 $$
 
 where the term $1\over n$ is quantized to one, given that clock cycle is a discrete quantitative variable. 
 This results in “wasting” the final clock cycle, as is evident in the Figure below, only to output one last data element, instead of n. 
