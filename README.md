@@ -78,7 +78,7 @@ $$ 𝑗 % 𝑛 = 𝑥 $$
 In the example of Figure 16 where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
  
-$$ 𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3} $$
+$$ {𝑗 % 4 = 3 ⟶ {−𝑊 − 1, −𝑊 + 3, −1, 3, 𝑊 − 1, 𝑊 + 3}} $$
 
 $$ 𝑗 % 4 = 2 ⟶ {−𝑊 + 2, 2, 𝑊 + 2} $$
 
@@ -137,13 +137,13 @@ element stored in the FIFO_0, and −1, the iteration distance is −1 − (−�
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛^𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
-$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \over {n-2}} $$
+$$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \over n -2 } $$
 
 This result is apparent in the Grid Map Figure where the FIFO stores every 𝑛^𝑡ℎ data element in the first row,
 except from the first two. The total size of the Reuse Chain is the aggregate of the sizes of all the individual
 memory elements in that buffer. In the case of the first and last chain, that is:
 
-$$ Chain_{edge_{size}}={2*WIDTH\over {n-4+6}}={2*WIDTH\over{n+2}} $$
+$$ Chain_{edge_{size}}={2*WIDTH\over n -4 +6}={2*WIDTH\over n +2} $$
 
 Which in turn is also evident in the Grid Map Figure, as the edge Reuse Chains store every 𝑛^𝑡ℎ data of the first
 and second rows, as well as 2 elements from the third.
@@ -156,9 +156,9 @@ Grid Map Figure, although all intermediate chains follow the same layout.
 The FIFOs of these Reuse Chains store every n^th data element of a row except from one element. The first element in the first FIFO,
 as presented in the Grid Map Figure, will be the one named -W+5, hence 
 
-$$ FIFO_{intermediate_{size}}={1-(-W+5)\over n}={(W-4)\over n}={(W-n)\over n}={WIDTH\over {n-1}}
+$$ FIFO_{intermediate_{size}}={1-(-W+5)\over n}={(W-4)\over n}={(W-n)\over n}={WIDTH\over {n-1}} $$
 
-Chain_{intermediate_{size}}={2*WIDTH\over{n-2+3}}={2*WIDTH\over {n+1}}
+$$ Chain_{intermediate_{size}}={2*WIDTH\over{n-2+3}}={2*WIDTH\over {n+1}} $$
 
 ### References
 <a id="1">[1]</a> 
