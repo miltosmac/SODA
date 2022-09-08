@@ -24,13 +24,13 @@ Project is created with:
 
 ### Introduction 
 
-  This architecture is based on the work done in [[1]](#1) which in turn is an expansion on [[2]](#2). The challenge
+>This architecture is based on the work done in [[1]](#1) which in turn is an expansion on [[2]](#2). The challenge
 that this design addresses is the optimality of the design when more than one Computation Kernels (CKs)
 are used in a single stage, where a CK is a compute module that implements the kernel function. That
 means that more than one inputs are processed at each clock and more than one outputs are produced
 by the design. Essentially, [[1]](#1) introduces an optimal design that exploits spatial parallelism, i.e., the
 concurrent calculation of results within the same clock cycle.
-  This architecture proposed in [[1]](#1) retains the properties that the architecture in [[2]](#2) achieves and
+>This architecture proposed in [[1]](#1) retains the properties that the architecture in [[2]](#2) achieves and
 extends them to a design with multiple CKs. Firstly, the design is fully pipelined, meaning that the CKs are
 able to consume one new input every clock. Additionally, it fully reuses the input data so that they only
 need to be fetched once from external memory, as well as creating a memory system with the minimum
