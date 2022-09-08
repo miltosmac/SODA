@@ -132,7 +132,7 @@ implemented with SRL.
 
 The size of the FIFOs can be derived as follows. Between element −𝑊 + 7, which will be the first
 element stored in the FIFO_0, and −1, the iteration distance is −1 − (−𝑊 + 7) = 𝑊 − 8 or 𝑊 − 2 ∗ 𝑛,
-where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛𝑡ℎ element.
+where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛^𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
 $$ _FIFO_{edge_{size}}={WIDTH-2*n\over n } = {WIDTH \over {n-2}} $$
