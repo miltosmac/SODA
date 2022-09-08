@@ -135,7 +135,7 @@ element stored in the FIFO_0, and −1, the iteration distance is −1 − (−�
 where 𝑊 denotes the 𝑊𝐼𝐷𝑇𝐻 and given than 𝑛 = 4. Howbeit, each chain stores every 𝑛𝑡ℎ element.
 Therefore, the number of elements stored in each FIFO of the first and last reuse chain, is:
 
-$$ _FIFO_{edge_{size}}={(WIDTH-2_*n)\over n }={WIDTH\ over n-2} $$
+$$ _FIFO_{edge_{size}}={(WIDTH-2*n)\over n } = {WIDTH\ over {n-2}} $$
 
 
 
