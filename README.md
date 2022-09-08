@@ -58,7 +58,7 @@ output of data, in lexicographic order.
 ![alt text](https://github.com/miltosmac/SODA/blob/main/SODA_Illustrations/SPTA_Grid.jpg?raw=true)
 
 An example of 𝛫 = 4 CKs available, hence 4 concurrent computations, will be considered. The figure
-presents a 2-dimensional grid 𝐴, of dimension size $𝐻𝐸𝐼𝐺𝐻𝑇 & 𝑊𝐼𝐷𝑇𝐻$ with their corresponding iteration
+presents a 2-dimensional grid 𝐴, of dimension size 𝐻𝐸𝐼𝐺𝐻𝑇 and 𝑊𝐼𝐷𝑇𝐻 with their corresponding iteration
 variables being 𝑖 and 𝑗. Note that the iteration starts at " − 1" for both dimensions, this is a design choice
 that has to do with the layout of the created memory system. Moreover, the iteration step is equal to 𝑛,
 so as to have 𝑛 elements processed in each clock cycle. The width of the array is denoted as 𝑊 and the
@@ -73,7 +73,7 @@ in internal memory. The opportunity to reuse these data manifest itself as most 
 than one computation. The memory system carries out this task. Elements are divided into 𝑛 sets,
 according to their iterator’s remainder modulo 𝑛, as described in the following equation.
 
-$$ {𝑗 % 𝑛 = 𝑥} $$
+𝑗 % 𝑛 = 𝑥
 
 In the example of _n=4_ where the data needed for calculation are named and highlighted in red,
 the resulting data sets of Equation the equation above are presented below.
