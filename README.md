@@ -15,7 +15,7 @@ This project introduces an architecture that optimizes Stencil Kernel Calculatio
 
 ### Technologies
 Project is created with:
-* C/C+
+* C/C++
 * Vitis HLS 2021.2
 
 ### Setup
